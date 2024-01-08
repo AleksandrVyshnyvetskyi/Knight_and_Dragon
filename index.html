@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Rubik+Doodle+Shadow&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/styles.css" />
+        <title>Knight&Dragon</title>
+    </head>
+    <body>
+        <div class="wrap">
+            <h1 class="title">Knight&Dragon</h1>
+            <div class="container">
+                <div>
+                    <img
+                        class="knight"
+                        src="./css/img/knight_1.png"
+                        alt="player"
+                        width="10%"
+                    />
+                </div>
+                <div class="monster">
+                    <img
+                        src="./css/img/dragon.png"
+                        alt="dragon"
+                        class="dragon"
+                        width="15%"
+                    />
+                </div>
+                <ul class="controls-list">
+                    <li class="controls">
+                        <button id="button2">Inventory</button>
+                    </li>
+                    <li class="controls">
+                        <button id="button3">Go to cave</button>
+                    </li>
+                    <li class="controls">
+                        <button id="button4">Go to store</button>
+                    </li>
+                </ul>
+                <ul class="status-list">
+                    <li><p>Status:</p></li>
+                    <li>
+                        <p>XP <span id="xpText">0</span></p>
+                    </li>
+                    <li>
+                        <p>HP <span id="hpText">100</span></p>
+                    </li>
+                    <li>
+                        <p>DMG <span id="dmgText">10</span></p>
+                    </li>
+                    <li>
+                        <p>Gold <span id="goldText">50</span></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

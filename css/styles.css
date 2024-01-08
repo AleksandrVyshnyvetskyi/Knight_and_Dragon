@@ -1,0 +1,99 @@
+body {
+    background-color: rgb(134, 72, 43);
+    cursor: default;
+}
+
+.wrap {
+    height: 100vh;
+    width: 100wh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(0deg, rgb(63, 41, 15) 33%, rgba(113,74,26,1) 66%, rgba(191,144,43,1) 100%);
+}
+
+.title {
+    color: #fff;
+    font-size: 48px;
+    font-family: 'Rubik Doodle Shadow', system-ui;
+}
+
+.container {
+    background-image: url(./img/forest_bg.jpg);
+    background-position: 50% 50%;
+    background-size: cover;
+    width: 80%;
+    height: 80%;
+    border: 5px solid rgb(134, 72, 43);
+    position: relative;
+    z-index: 1;
+}
+
+.knight {
+    position: absolute;
+    top: 65%;
+    left: 30%;
+    min-width: 80px;
+    animation: bounce 3s ease-in-out infinite;
+}
+
+.dragon {
+    position: absolute;
+    top: 60%;
+    right: 30%;
+    animation: bounce 5s ease-in-out infinite;
+    min-width: 120px;
+}
+
+.controls-list {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    list-style-type: none;
+}
+
+.controls-list button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    background-color: rgb(134, 72, 43);
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'DotGothic16', sans-serif;
+}
+
+.status-list{
+    display: flex;
+    color: #fff;
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+    list-style-type: none;
+    margin: 0;
+}
+
+.status-list li {
+    padding: 0 10px;
+    font-weight: 500;
+    font-size: 18px;
+    font-family: 'DotGothic16', sans-serif;
+}
+
+.status-list li span {
+    font-weight: 800;
+    
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    25%, 75% {
+        transform: translateY(-10px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+}
