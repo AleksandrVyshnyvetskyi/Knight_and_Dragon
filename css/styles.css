@@ -3,6 +3,10 @@ body {
     cursor: default;
 }
 
+li {
+    list-style-type: none;
+}
+
 .wrap {
     height: 100vh;
     width: 100wh;
@@ -19,7 +23,10 @@ body {
 }
 
 .container {
-    background-image: url(./img/forest_bg.jpg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url(./img/backgraunds/forest_bg.jpg);
     background-position: 50% 50%;
     background-size: cover;
     width: 80%;
@@ -34,22 +41,102 @@ body {
     top: 65%;
     left: 30%;
     min-width: 80px;
-    animation: bounce 3s ease-in-out infinite;
+    animation: bounceKnight 3s ease-in-out infinite;
+}
+
+.wolf {
+    position: absolute;
+    top: 55%;
+    right: 30%;
+    animation: bounceMonster 5s ease-in-out infinite;
+    min-width: 120px;
+    display: block;
+}
+
+.goblin {
+    position: absolute;
+    top: 65%;
+    right: 35%;
+    animation: bounceMonster 5s ease-in-out infinite;
+    min-width: 120px;
+    display: none;
+}
+
+.skeleton{
+    position: absolute;
+    top: 65%;
+    right: 35%;
+    animation: bounceMonster 5s ease-in-out infinite;
+    min-width: 120px;
+    display: none;
+}
+
+.cerber {
+    position: absolute;
+    top: 65%;
+    right: 25%;
+    animation: bounceMonster 5s ease-in-out infinite;
+    min-width: 120px;
+    display: none;
 }
 
 .dragon {
     position: absolute;
     top: 60%;
     right: 30%;
-    animation: bounce 5s ease-in-out infinite;
+    animation: bounceMonster 5s ease-in-out infinite;
     min-width: 120px;
+    display: none;
+}
+
+.inventory {
+    display: none;
+    border: 5px solid #945100;
+    background-color: rgb(255, 200, 134);
+    padding: 0;
+    position: absolute;
+    bottom: 8%;
+    left: 6%;
+}
+
+.inv-box {
+    width: 60px;
+    height: 60px;
+    border: 4px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+.inv-box img {
+    width: 60px;
+    transform: rotate(-45deg);
+}
+
+.inv-box .empty {
+    transform: none;
+}
+
+.stick {
+    display: none;
+}
+
+.dager {
+    display: none;
+}
+
+.sword {
+    display: none;
 }
 
 .controls-list {
     display: flex;
     position: absolute;
     bottom: 0;
-    list-style-type: none;
+    left: 5%;
+    padding: 0;
 }
 
 .controls-list button {
@@ -70,8 +157,8 @@ body {
     position: absolute;
     right: 5%;
     bottom: 0;
-    list-style-type: none;
     margin: 0;
+    padding: 0;
 }
 
 .status-list li {
@@ -86,14 +173,58 @@ body {
     
 }
 
-@keyframes bounce {
+.message-area {
+    display: inline-block;
+    border: 5px solid #f28705;
+    background-color: #945100;
+    padding: 0 15px;
+    margin-top: 10px;
+}
+
+.message{
+    font-weight: 700;
+    color: #fff;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #fff;
+    animation: typing 3s steps(40), blinckCursor .7s step-end infinite;
+}
+
+@keyframes bounceKnight {
     0% {
         transform: translateY(0);
     }
     25%, 75% {
-        transform: translateY(-10px);
+        transform: translateY(-10px) translateX(30px);
     }
     50% {
+        transform: translateY(0) translateX(0);
+    }
+}
+
+@keyframes bounceMonster {
+    0% {
         transform: translateY(0);
+    }
+    25%, 75% {
+        transform: translateY(-10px) translateX(-30px);
+    }
+    50% {
+        transform: translateY(0) translateX(0);
+    }
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blinckCursor {
+    50% {
+        border-color: transparent;
     }
 }
