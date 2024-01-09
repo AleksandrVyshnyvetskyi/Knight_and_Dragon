@@ -8,7 +8,7 @@ li {
 }
 
 .wrap {
-    height: 100vh;
+    height: 98vh;
     width: 100wh;
     display: flex;
     flex-direction: column;
@@ -44,13 +44,17 @@ li {
     animation: bounceKnight 3s ease-in-out infinite;
 }
 
+.monsters {
+    display: block;
+}
+
 .wolf {
     position: absolute;
     top: 55%;
     right: 30%;
     animation: bounceMonster 5s ease-in-out infinite;
     min-width: 120px;
-    display: block;
+    display: none;
 }
 
 .goblin {
@@ -58,7 +62,7 @@ li {
     top: 65%;
     right: 35%;
     animation: bounceMonster 5s ease-in-out infinite;
-    min-width: 120px;
+    min-width: 90px;
     display: none;
 }
 
@@ -73,8 +77,8 @@ li {
 
 .cerber {
     position: absolute;
-    top: 65%;
-    right: 25%;
+    top: 60%;
+    right: 15%;
     animation: bounceMonster 5s ease-in-out infinite;
     min-width: 120px;
     display: none;
@@ -82,8 +86,8 @@ li {
 
 .dragon {
     position: absolute;
-    top: 60%;
-    right: 30%;
+    top: 45%;
+    right: 15%;
     animation: bounceMonster 5s ease-in-out infinite;
     min-width: 120px;
     display: none;
@@ -140,15 +144,25 @@ li {
 }
 
 .controls-list button {
+    display: block;
     padding: 5px 10px;
     margin: 0 5px;
     color: #fff;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
     background-color: rgb(134, 72, 43);
     border-radius: 5px;
     cursor: pointer;
     font-family: 'DotGothic16', sans-serif;
+}
+
+.controls-list button:hover {
+    border-color: #f28705;
+    background-color: #945100;
+}
+
+.controls-list #button3,#button4,#button5,#button6 {
+    display: none;
 }
 
 .status-list{
@@ -202,12 +216,24 @@ li {
     }
 }
 
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    25%, 75% {
+        transform: translateY(-5px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+}
+
 @keyframes bounceMonster {
     0% {
         transform: translateY(0);
     }
     25%, 75% {
-        transform: translateY(-10px) translateX(-30px);
+        transform: translateY(-7px) translateX(-30px);
     }
     50% {
         transform: translateY(0) translateX(0);
