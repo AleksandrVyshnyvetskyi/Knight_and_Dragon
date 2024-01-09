@@ -149,6 +149,7 @@ function goTown() {
     update(locations[0]);
     backGround.style.backgroundImage = 'url("css/img/backgraunds/city.webp")';
     knight.style.top = "75%";
+    knight.style.left = "40%";
     knight.style.width = "100px";
     knight.style.animation = "bounce 5s ease-in-out infinite";
     wolf.style.display = "none";
