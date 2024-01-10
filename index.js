@@ -4,18 +4,19 @@ let gold = 50;
 let currentWeapon = 0;
 let fighting;
 let monsterHealth;
-let inventory = [];
+let inventory = ["stick", "dager", "sword"];
 
 const backGround = document.querySelector(".container");
 const knight = document.querySelector(".knight");
-const inventoryBTN = document.querySelector(".inventory");
-const monsters = document.querySelector(".monsters");
 
-const wolf = document.querySelector(".wolf");
-const goblin = document.querySelector(".goblin");
-const skeleton = document.querySelector(".skeleton");
-const cerber = document.querySelector(".cerber");
-const dragon = document.querySelector(".dragon");
+const inventoryBox = document.querySelector(".inventory");
+const closeInventory = document.querySelector(".close");
+const stick = document.querySelector(".stick");
+const dager = document.querySelector(".dager");
+const sword = document.querySelector(".sword");
+
+const monsters = document.querySelector(".monsters");
+const targetMonster = document.querySelector(".target-monster");
 
 const button1 = document.querySelector("#button1");
 const button2 = document.querySelector("#button2");
@@ -84,18 +85,19 @@ const monster = [
 const locations = [
     {
         name: "town square",
-        "button text": ["Go to shop", "Go to forest"],
-        "button functions": [goShop, goForest, hideMode],
+        "button text": ["Inventory", "Go to shop", "Go to forest"],
+        "button functions": [openInventory, goShop, goForest],
         text: 'You are in the town square. You see a sign that says "Shop".',
     },
     {
         name: "shop",
         "button text": [
+            "Inventory",
             "Buy 10 health (10 gold)",
             "Buy weapon (30 gold)",
             "Go to town square",
         ],
-        "button functions": [buyHealth, buyWeapon, goTown],
+        "button functions": [openInventory, buyHealth, buyWeapon, goTown],
         text: "You enter the shop.",
     },
     {
@@ -128,6 +130,7 @@ const locations = [
 
 button1.onclick = openInventory;
 button2.onclick = goTown;
+closeInventory.onclick = close;
 
 function update(location) {
     button1.innerText = location["button text"][0];
@@ -145,6 +148,12 @@ function update(location) {
     text.innerText = location.text;
 }
 
+function animationText() {
+    text.classList.remove("animate-message");
+    void text.offsetWidth;
+    text.classList.add("animate-message");
+}
+
 function goTown() {
     update(locations[0]);
     backGround.style.backgroundImage = 'url("css/img/backgraunds/city.webp")';
@@ -152,12 +161,14 @@ function goTown() {
     knight.style.left = "40%";
     knight.style.width = "100px";
     knight.style.animation = "bounce 5s ease-in-out infinite";
-    wolf.style.display = "none";
-    goblin.style.display = "none";
-    skeleton.style.display = "none";
-    cerber.style.display = "none";
-    dragon.style.display = "none";
-    button3.style.display = "none";
+    targetMonster.style.display = "none";
+    targetMonster.classList = "";
+    button3.style.display = "block";
+    button4.style.display = "none";
+    button5.style.display = "none";
+    button6.style.display = "none";
+    animationText();
+    close();
 }
 
 function goShop() {
@@ -166,6 +177,9 @@ function goShop() {
     knight.style.width = "130px";
     knight.style.top = "70%";
     button3.style.display = "block";
+    button4.style.display = "block";
+    animationText();
+    close();
 }
 
 function goForest() {
@@ -174,19 +188,54 @@ function goForest() {
         'url("css/img/backgraunds/forest_bg.jpg")';
     knight.style.animation = "bounceKnight 3s ease-in-out infinite";
     knight.style.top = "65%";
+    knight.style.left = "30%";
+
+    animationText();
     monsters.style.display = "block";
     button3.style.display = "block";
     button4.style.display = "block";
     button5.style.display = "block";
-    // button6.style.display = "block";
+    button6.style.display = "block";
+    close();
 }
 
-function goCave() {
-    1 + 2;
+function openInventory() {
+    inventoryBox.style.display = "block";
+    inventoryBox.classList.remove("hiden");
+    if (inventory.includes("stick")) {
+        console.log("STICK === TRUE !!!");
+        stick.style.display = "block";
+    }
+    if (inventory.includes("dager")) {
+        console.log("dager === TRUE !!!");
+        dager.style.display = "block";
+    }
+    if (inventory.includes("sword")) {
+        console.log("sword === TRUE !!!");
+        sword.style.display = "block";
+    } else {
+        knight.src = "./css/img/knights/knight.png";
+    }
 }
 
-function hideMode() {
-    1 + 2;
+function close() {
+    inventoryBox.classList.add("hiden");
+}
+
+stick.onclick = equipStick;
+dager.onclick = equipDager;
+sword.onclick = equipSword;
+
+function equipStick() {
+    knight.src = "./css/img/knights/knight_stick.png";
+}
+
+function equipDager() {
+    knight.src = "./css/img/knights/knight_dager.png";
+}
+
+function equipSword() {
+    knight.src = "./css/img/knights/knight_sword.png";
 }
 
 function buyHealth() {
@@ -198,51 +247,46 @@ function buyWeapon() {
 }
 
 function fightWolf() {
-    wolf.style.display = "block";
-    goblin.style.display = "none";
-    skeleton.style.display = "none";
-    cerber.style.display = "none";
-    dragon.style.display = "none";
+    targetMonster.src = "./css/img/monsters/wolf.png";
+    targetMonster.classList = "";
+    targetMonster.classList.add("wolf");
+
     fighting = 0;
     goFight();
 }
 
 function fightGoblin() {
-    goblin.style.display = "block";
-    wolf.style.display = "none";
-    skeleton.style.display = "none";
-    cerber.style.display = "none";
-    dragon.style.display = "none";
+    targetMonster.src = "./css/img/monsters/goblin.png";
+    targetMonster.classList = "";
+    targetMonster.classList.add("goblin");
+
     fighting = 1;
     goFight();
 }
 
 function fightSkeleton() {
-    skeleton.style.display = "block";
-    wolf.style.display = "none";
-    goblin.style.display = "none";
-    cerber.style.display = "none";
-    dragon.style.display = "none";
+    targetMonster.src = "./css/img/monsters/skeleton.png";
+    targetMonster.classList = "";
+    targetMonster.classList.add("skeleton");
+
     fighting = 2;
     goFight();
 }
 
 function fightCerber() {
-    cerber.style.display = "block";
-    wolf.style.display = "none";
-    goblin.style.display = "none";
-    skeleton.style.display = "none";
-    dragon.style.display = "none";
+    targetMonster.src = "./css/img/monsters/cerber.png";
+    targetMonster.classList = "";
+    targetMonster.classList.add("cerber");
+
     fighting = 3;
     goFight();
 }
 
 function fightDragon() {
-    dragon.style.display = "block";
-    wolf.style.display = "none";
-    goblin.style.display = "none";
-    skeleton.style.display = "none";
-    cerber.style.display = "none";
+    targetMonster.src = "./css/img/monsters/dragon.png";
+    targetMonster.classList = "";
+    targetMonster.classList.add("dragon");
+
     fighting = 4;
     goFight();
 }
@@ -255,14 +299,12 @@ function dodge() {
     1 + 2;
 }
 
-function openInventory() {
-    inventoryBTN.style.display = "block";
-}
-
 function goFight() {
     update(locations[3]);
     // monsterHealth = monsters[fighting].health;
     // monsterStats.style.display = "block";
+    targetMonster.style.display = "block";
     button4.style.display = "none";
     button5.style.display = "none";
+    button6.style.display = "none";
 }

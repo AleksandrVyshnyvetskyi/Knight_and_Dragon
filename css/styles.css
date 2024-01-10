@@ -7,6 +7,10 @@ li {
     list-style-type: none;
 }
 
+.hiden {
+    visibility: hidden;
+}
+
 .wrap {
     min-height: 98vh;
     display: flex;
@@ -34,7 +38,7 @@ li {
     border: 5px solid rgb(134, 72, 43);
     position: relative;
     z-index: 1;
-    transition: all 1.5s ease;
+    transition: all 1s ease;
 }
 
 .knight {
@@ -50,13 +54,17 @@ li {
     display: block;
 }
 
+.target-monster {
+    display: none;
+}
+
 .wolf {
     position: absolute;
     top: 55%;
     right: 30%;
     animation: bounceMonster 5s ease-in-out infinite;
+    width: 20%;
     min-width: 120px;
-    display: none;
 }
 
 .goblin {
@@ -64,8 +72,8 @@ li {
     top: 65%;
     right: 35%;
     animation: bounceMonster 5s ease-in-out infinite;
+    width: 6%;
     min-width: 90px;
-    display: none;
 }
 
 .skeleton{
@@ -73,8 +81,8 @@ li {
     top: 65%;
     right: 35%;
     animation: bounceMonster 5s ease-in-out infinite;
+    width: 8%;
     min-width: 120px;
-    display: none;
 }
 
 .cerber {
@@ -82,8 +90,8 @@ li {
     top: 60%;
     right: 15%;
     animation: bounceMonster 5s ease-in-out infinite;
+    width: 30%;
     min-width: 120px;
-    display: none;
 }
 
 .dragon {
@@ -91,8 +99,8 @@ li {
     top: 45%;
     right: 15%;
     animation: bounceMonster 5s ease-in-out infinite;
+    width: 25%;
     min-width: 120px;
-    display: none;
 }
 
 .inventory {
@@ -118,11 +126,6 @@ li {
 
 .inv-box img {
     width: 60px;
-    transform: rotate(-45deg);
-}
-
-.inv-box .empty {
-    transform: none;
 }
 
 .stick {
@@ -169,24 +172,26 @@ li {
 
 .status-list{
     display: flex;
+    /* flex-direction: column; */
     color: #fff;
     position: absolute;
-    right: 5%;
+    right: 0;
     bottom: 0;
-    margin: 0;
-    padding: 0;
 }
 
 .status-list li {
-    padding: 0 10px;
+    padding: 0;
     font-weight: 500;
     font-size: 18px;
     font-family: 'DotGothic16', sans-serif;
 }
 
+.status-list li p {
+    margin: 5px;
+}
+
 .status-list li span {
     font-weight: 800;
-    
 }
 
 .message-area {
@@ -203,6 +208,9 @@ li {
     overflow: hidden;
     white-space: nowrap;
     border-right: 2px solid #fff;
+}
+
+.animate-message {
     animation: typing 3s steps(40), blinckCursor .7s step-end infinite;
 }
 
