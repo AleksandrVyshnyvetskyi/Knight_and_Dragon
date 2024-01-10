@@ -1,10 +1,10 @@
 let xp = 0;
 let health = 100;
-let gold = 50;
+let gold = 5000;
 let currentWeapon = 0;
-let fighting;
+let fighting = 10;
 let monsterHealth;
-let inventory = ["stick", "dager", "sword"];
+let inventory = [];
 
 const backGround = document.querySelector(".container");
 const knight = document.querySelector(".knight");
@@ -34,6 +34,8 @@ const goldText = document.querySelector("#goldText");
 const monsterStats = document.querySelector("#monsterStats");
 const monsterName = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
+const monsterDmg = document.querySelector("#monsterDmg");
+const monsterLvl = document.querySelector("#monsterLvl");
 
 const weapons = [
     {
@@ -56,27 +58,27 @@ const weapons = [
 
 const monster = [
     {
-        name: "wolf",
+        name: "Wolf",
         level: 2,
         health: 30,
     },
     {
-        name: "goblin",
+        name: "Goblin",
         level: 4,
         health: 75,
     },
     {
-        name: "skeleton",
+        name: "Skeleton",
         level: 6,
         health: 150,
     },
     {
-        name: "cerber",
+        name: "Cerber",
         level: 8,
         health: 200,
     },
     {
-        name: "dragon",
+        name: "Dragon",
         level: 10,
         health: 300,
     },
@@ -93,8 +95,8 @@ const locations = [
         name: "shop",
         "button text": [
             "Inventory",
-            "Buy 10 health (10 gold)",
-            "Buy weapon (30 gold)",
+            "Buy 10 health (50 gold)",
+            "Buy weapon (100 gold)",
             "Go to town square",
         ],
         "button functions": [openInventory, buyHealth, buyWeapon, goTown],
@@ -167,6 +169,7 @@ function goTown() {
     button4.style.display = "none";
     button5.style.display = "none";
     button6.style.display = "none";
+    monsterStats.style.display = "none";
     animationText();
     close();
 }
@@ -196,6 +199,7 @@ function goForest() {
     button4.style.display = "block";
     button5.style.display = "block";
     button6.style.display = "block";
+    button6.style.marginLeft = "200px";
     close();
 }
 
@@ -203,15 +207,12 @@ function openInventory() {
     inventoryBox.style.display = "block";
     inventoryBox.classList.remove("hiden");
     if (inventory.includes("stick")) {
-        console.log("STICK === TRUE !!!");
         stick.style.display = "block";
     }
     if (inventory.includes("dager")) {
-        console.log("dager === TRUE !!!");
         dager.style.display = "block";
     }
     if (inventory.includes("sword")) {
-        console.log("sword === TRUE !!!");
         sword.style.display = "block";
     } else {
         knight.src = "./css/img/knights/knight.png";
@@ -228,28 +229,95 @@ sword.onclick = equipSword;
 
 function equipStick() {
     knight.src = "./css/img/knights/knight_stick.png";
+    fighting = 20;
+    dmgText.innerText = "20";
+    console.log("stick");
+    close();
 }
 
 function equipDager() {
     knight.src = "./css/img/knights/knight_dager.png";
+    fighting = 50;
+    dmgText.innerText = 50;
+    close();
 }
 
 function equipSword() {
     knight.src = "./css/img/knights/knight_sword.png";
+    fighting = 75;
+    dmgText.innerText = 75;
+    close();
+}
+
+function dmgMetr() {
+    if (weapons.length < 1) {
+        fighting = 10;
+        dmgText.innerText = "10";
+    }
+    if (inventory.includes("stick")) {
+        fighting = 20;
+        console.log("stick");
+        dmgText.innerText = "20";
+    }
+    if (inventory.includes("dager")) {
+        fighting = 50;
+        dmgText.innerText = 50;
+    }
+    if (inventory.includes("sword")) {
+        fighting = 75;
+        dmgText.innerText = 75;
+    }
 }
 
 function buyHealth() {
-    1 + 2;
+    if (gold >= 50) {
+        gold -= 50;
+        health += 10;
+        goldText.innerText = gold;
+        hpText.innerText = health;
+    } else {
+        animationText();
+        text.innerText = "You do not have enough gold to buy health.";
+    }
 }
 
 function buyWeapon() {
-    1 + 2;
+    if (currentWeapon < weapons.length - 1) {
+        if (gold >= 100) {
+            gold -= 100;
+            currentWeapon++;
+            goldText.innerText = gold;
+            let newWeapon = weapons[currentWeapon].name;
+            text.innerText = "You now have a " + newWeapon + ".";
+            inventory.push(newWeapon);
+            text.innerText += " In your inventory you have: " + inventory;
+            if (inventory.includes("stick")) {
+                knight.src = "./css/img/knights/knight_stick.png";
+            }
+            if (inventory.includes("dager")) {
+                knight.src = "./css/img/knights/knight_dager.png";
+            }
+            if (inventory.includes("sword")) {
+                knight.src = "./css/img/knights/knight_sword.png";
+            }
+            dmgMetr();
+        } else {
+            text.innerText = "You do not have enough gold to buy a weapon.";
+        }
+    } else {
+        text.innerText = "You already have the most powerful weapon!";
+    }
 }
 
 function fightWolf() {
     targetMonster.src = "./css/img/monsters/wolf.png";
     targetMonster.classList = "";
     targetMonster.classList.add("wolf");
+
+    monsterStats.style.display = "flex";
+    monsterName.innerText = monster[0].name;
+    monsterHealthText.innerText = monster[0].health;
+    monsterLvl.innerText = monster[0].level;
 
     fighting = 0;
     goFight();
@@ -260,6 +328,11 @@ function fightGoblin() {
     targetMonster.classList = "";
     targetMonster.classList.add("goblin");
 
+    monsterStats.style.display = "flex";
+    monsterName.innerText = monster[1].name;
+    monsterHealthText.innerText = monster[1].health;
+    monsterLvl.innerText = monster[1].level;
+
     fighting = 1;
     goFight();
 }
@@ -268,6 +341,11 @@ function fightSkeleton() {
     targetMonster.src = "./css/img/monsters/skeleton.png";
     targetMonster.classList = "";
     targetMonster.classList.add("skeleton");
+
+    monsterStats.style.display = "flex";
+    monsterName.innerText = monster[2].name;
+    monsterHealthText.innerText = monster[2].health;
+    monsterLvl.innerText = monster[2].level;
 
     fighting = 2;
     goFight();
@@ -278,6 +356,11 @@ function fightCerber() {
     targetMonster.classList = "";
     targetMonster.classList.add("cerber");
 
+    monsterStats.style.display = "flex";
+    monsterName.innerText = monster[3].name;
+    monsterHealthText.innerText = monster[3].health;
+    monsterLvl.innerText = monster[3].level;
+
     fighting = 3;
     goFight();
 }
@@ -287,12 +370,21 @@ function fightDragon() {
     targetMonster.classList = "";
     targetMonster.classList.add("dragon");
 
+    monsterStats.style.display = "flex";
+    monsterName.innerText = monster[4].name;
+    monsterHealthText.innerText = monster[4].health;
+    monsterLvl.innerText = monster[4].level;
+
     fighting = 4;
     goFight();
 }
 
 function attack() {
-    1 + 2;
+    const currentHealMonster = monster[0].health;
+    // monsterHealthText.innerText = currentHealMonster;
+    // const resultHeal = currentHealMonster - 10;
+    // monster[0].health = resultHeal;
+    // monsterHealthText.innerText = resultHeal;
 }
 
 function dodge() {

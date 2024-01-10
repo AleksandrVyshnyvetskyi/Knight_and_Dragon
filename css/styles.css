@@ -1,3 +1,7 @@
+/* :root {
+    --bar-width-wolf: 50px; 
+} */
+
 body {
     background-color: rgb(134, 72, 43);
     cursor: default;
@@ -103,13 +107,24 @@ li {
     min-width: 120px;
 }
 
+#monsterStats {
+    border: 5px solid #f28705;
+    background-color: #945100;
+    display: flex;
+    color: #fff;
+    position: absolute;
+    padding: 0;
+    right: 55px;
+    bottom: 50px;
+    display: none;
+}
 .inventory {
     display: none;
     border: 5px solid #945100;
     background-color: rgb(255, 200, 134);
     padding: 0;
     position: absolute;
-    bottom: 8%;
+    bottom: 15%;
     left: 6%;
 }
 
@@ -144,7 +159,7 @@ li {
     display: flex;
     position: absolute;
     bottom: 0;
-    left: 5%;
+    left: 50px;
     padding: 0;
 }
 
@@ -171,26 +186,33 @@ li {
 }
 
 .status-list{
+    border: 5px solid #f28705;
+    background-color: #945100;
     display: flex;
-    /* flex-direction: column; */
     color: #fff;
     position: absolute;
-    right: 0;
-    bottom: 0;
+    padding: 0;
+    left: 55px;
+    bottom: 50px;
 }
 
-.status-list li {
+.status-list li, #monsterStats li {
+    border: 4px solid rgb(92, 50, 30);
     padding: 0;
     font-weight: 500;
     font-size: 18px;
     font-family: 'DotGothic16', sans-serif;
 }
 
-.status-list li p {
+.status-list li:not(:last-child), #monsterStats li:not(:last-child) {
+    border-right: none;
+}
+
+.status-list li p, #monsterStats li p {
     margin: 5px;
 }
 
-.status-list li span {
+.status-list span, #monsterStats span {
     font-weight: 800;
 }
 
