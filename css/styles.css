@@ -1,7 +1,3 @@
-/* :root {
-    --bar-width-wolf: 50px; 
-} */
-
 body {
     background-color: rgb(134, 72, 43);
     cursor: default;
@@ -45,6 +41,39 @@ li {
     transition: all 1s ease;
 }
 
+.win-game {
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    z-index: 9;
+    border: 5px solid #f28705;
+    background-color: #945100;
+    top: 2%;
+    display: flex;
+    pointer-events: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 1s ease;
+}
+
+.win-game-title{
+    color: bisque;
+    font-family: 'Rubik Doodle Shadow', system-ui;
+    font-size: 48px;
+}
+
+.win-game-button {
+    padding: 5px 10px;
+    border: 4px solid #f28705;
+    background-color: #945100;
+    color: bisque;
+    font-family: 'DotGothic16', sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+}
+
 .knight {
     position: absolute;
     top: 65%;
@@ -60,6 +89,7 @@ li {
 
 .target-monster {
     display: none;
+    
 }
 
 .wolf {
@@ -69,6 +99,7 @@ li {
     animation: bounceMonster 5s ease-in-out infinite;
     width: 20%;
     min-width: 120px;
+    transition: all .5s;
 }
 
 .goblin {
@@ -335,5 +366,23 @@ a {
 @keyframes blinckCursor {
     50% {
         border-color: transparent;
+    }
+}
+
+@keyframes defeatMonster {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(180deg)
+    }
+}
+
+@keyframes lose {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(-90deg)
     }
 }

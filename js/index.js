@@ -2,12 +2,15 @@ let xp = 0;
 let health = 100;
 let gold = 5000;
 let currentWeapon = 0;
-let fighting = 10;
+let fighting;
 let monsterHealth;
 let inventory = [];
 
 const backGround = document.querySelector(".container");
 const knight = document.querySelector(".knight");
+
+const winGameWindow = document.querySelector(".win-game");
+const winGameButton = document.querySelector(".win-game-button");
 
 const inventoryBox = document.querySelector(".inventory");
 const closeInventory = document.querySelector(".close");
@@ -39,7 +42,7 @@ const monsterLvl = document.querySelector("#monsterLvl");
 
 const weapons = [
     {
-        name: "empty",
+        name: "fist",
         power: 10,
     },
     {
@@ -64,23 +67,23 @@ const monster = [
     },
     {
         name: "Goblin",
-        level: 4,
+        level: 5,
         health: 75,
     },
     {
         name: "Skeleton",
-        level: 6,
-        health: 150,
+        level: 7,
+        health: 300,
     },
     {
         name: "Cerber",
-        level: 8,
-        health: 200,
+        level: 15,
+        health: 600,
     },
     {
         name: "Dragon",
-        level: 10,
-        health: 300,
+        level: 20,
+        health: 1200,
     },
 ];
 
@@ -95,7 +98,7 @@ const locations = [
         name: "shop",
         "button text": [
             "Inventory",
-            "Buy 10 health (50 gold)",
+            "Buy 15 health (10 gold)",
             "Buy weapon (100 gold)",
             "Go to town square",
         ],
@@ -128,11 +131,44 @@ const locations = [
         "button functions": [attack, dodge, goTown],
         text: "You are fighting a monster.",
     },
+    {
+        name: "kill monster",
+        "button text": [
+            "Go to town square",
+            "Go to town square",
+            "Go to town square",
+        ],
+        "button functions": [goTown, goTown, goTown],
+        text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.',
+    },
+    {
+        name: "lose",
+        "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
+        "button functions": [restart, restart, restart],
+        text: "You die. ☠️",
+    },
+    {
+        name: "kill monster",
+        "button text": [
+            "Go to town square",
+            "Go to town square",
+            "Go to town square",
+        ],
+        "button functions": [goTown, goTown, goTown],
+        text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.',
+    },
+    {
+        name: "win",
+        "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
+        "button functions": [restart, restart, restart],
+        text: "You defeat the dragon! YOU WIN THE GAME! 🎉",
+    },
 ];
 
 button1.onclick = openInventory;
 button2.onclick = goTown;
 closeInventory.onclick = close;
+winGameButton.onclick = restart;
 
 function update(location) {
     button1.innerText = location["button text"][0];
@@ -214,7 +250,8 @@ function openInventory() {
     }
     if (inventory.includes("sword")) {
         sword.style.display = "block";
-    } else {
+    }
+    if (inventory.length === 0) {
         knight.src = "./css/img/knights/knight.png";
     }
 }
@@ -270,9 +307,9 @@ function dmgMetr() {
 }
 
 function buyHealth() {
-    if (gold >= 50) {
-        gold -= 50;
-        health += 10;
+    if (gold >= 10) {
+        gold -= 10;
+        health += 15;
         goldText.innerText = gold;
         hpText.innerText = health;
     } else {
@@ -282,6 +319,7 @@ function buyHealth() {
 }
 
 function buyWeapon() {
+    animationText();
     if (currentWeapon < weapons.length - 1) {
         if (gold >= 100) {
             gold -= 100;
@@ -313,6 +351,8 @@ function fightWolf() {
     targetMonster.src = "./css/img/monsters/wolf.png";
     targetMonster.classList = "";
     targetMonster.classList.add("wolf");
+    targetMonster.style.animation = "";
+    targetMonster.style.filter = "";
 
     monsterStats.style.display = "flex";
     monsterName.innerText = monster[0].name;
@@ -327,6 +367,8 @@ function fightGoblin() {
     targetMonster.src = "./css/img/monsters/goblin.png";
     targetMonster.classList = "";
     targetMonster.classList.add("goblin");
+    targetMonster.style.animation = "";
+    targetMonster.style.filter = "";
 
     monsterStats.style.display = "flex";
     monsterName.innerText = monster[1].name;
@@ -341,6 +383,8 @@ function fightSkeleton() {
     targetMonster.src = "./css/img/monsters/skeleton.png";
     targetMonster.classList = "";
     targetMonster.classList.add("skeleton");
+    targetMonster.style.animation = "";
+    targetMonster.style.filter = "";
 
     monsterStats.style.display = "flex";
     monsterName.innerText = monster[2].name;
@@ -355,6 +399,8 @@ function fightCerber() {
     targetMonster.src = "./css/img/monsters/cerber.png";
     targetMonster.classList = "";
     targetMonster.classList.add("cerber");
+    targetMonster.style.animation = "";
+    targetMonster.style.filter = "";
 
     monsterStats.style.display = "flex";
     monsterName.innerText = monster[3].name;
@@ -369,6 +415,8 @@ function fightDragon() {
     targetMonster.src = "./css/img/monsters/dragon.png";
     targetMonster.classList = "";
     targetMonster.classList.add("dragon");
+    targetMonster.style.animation = "";
+    targetMonster.style.filter = "";
 
     monsterStats.style.display = "flex";
     monsterName.innerText = monster[4].name;
@@ -379,24 +427,99 @@ function fightDragon() {
     goFight();
 }
 
-function attack() {
-    const currentHealMonster = monster[0].health;
-    // monsterHealthText.innerText = currentHealMonster;
-    // const resultHeal = currentHealMonster - 10;
-    // monster[0].health = resultHeal;
-    // monsterHealthText.innerText = resultHeal;
-}
-
 function dodge() {
     1 + 2;
 }
 
 function goFight() {
     update(locations[3]);
-    // monsterHealth = monsters[fighting].health;
+    monsterHealth = monster[fighting].health;
     // monsterStats.style.display = "block";
     targetMonster.style.display = "block";
     button4.style.display = "none";
     button5.style.display = "none";
     button6.style.display = "none";
+}
+
+function attack() {
+    animationText();
+    text.innerText = "The " + monster[fighting].name + " attacks.";
+    text.innerText +=
+        " You attack it with your " + weapons[currentWeapon].name + ".";
+    health -= getMonsterAttackValue(monster[fighting].level);
+    if (isMonsterHit()) {
+        monsterHealth -=
+            weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
+    } else {
+        text.innerText += " You miss.";
+    }
+    hpText.innerText = health;
+    monsterHealthText.innerText = monsterHealth;
+    if (health <= 0) {
+        lose();
+    } else if (monsterHealth <= 0) {
+        fighting === 4 ? winGame() : defeatMonster();
+    }
+    // if (Math.random() <= 0.1 && inventory.length !== 1) {
+    //     text.innerText += " Your " + inventory.pop() + " breaks.";
+    //     currentWeapon--;
+    // }
+}
+
+function getMonsterAttackValue(level) {
+    const hit = level * 5 - Math.floor(Math.random() * xp);
+    return hit > 0 ? hit : 0;
+}
+
+function isMonsterHit() {
+    return Math.random() > 0.2 || health < 20;
+}
+
+function dodge() {
+    animationText();
+    text.innerText = "You dodge the attack from the " + monster[fighting].name;
+}
+
+function lose() {
+    update(locations[5]);
+    animationText();
+    knight.style.filter = "brightness(20%)";
+    knight.style.top = "75%";
+    knight.style.animation = "lose 2s ease 0s 1 normal forwards";
+}
+
+function restart() {
+    xp = 0;
+    xpText.innerText = xp;
+    health = 100;
+    hpText.innerText = health;
+    gold = 50;
+    goldText.innerText = gold;
+    currentWeapon = 0;
+    inventory = ["fist"];
+    winGameWindow.style.opacity = "0";
+    winGameWindow.style.pointerEvents = "none";
+    goTown();
+}
+
+function defeatMonster() {
+    gold += Math.floor(monster[fighting].level * 6.7);
+    xp += monster[fighting].level;
+    goldText.innerText = gold;
+    xpText.innerText = xp;
+    update(locations[4]);
+    targetMonster.style.filter = "brightness(20%)";
+    targetMonster.style.animation =
+        "defeatMonster 2s ease 0s 1 normal forwards";
+}
+
+function winGame() {
+    update(locations[7]);
+    button4.style.display = "none";
+    button5.style.display = "none";
+    button6.style.display = "none";
+    winGameWindow.style.opacity = "1";
+    setTimeout(function () {
+        winGameWindow.style.pointerEvents = "auto";
+    }, 1);
 }
