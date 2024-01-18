@@ -28,6 +28,7 @@ const button3 = document.querySelector("#button3");
 const button4 = document.querySelector("#button4");
 const button5 = document.querySelector("#button5");
 const button6 = document.querySelector("#button6");
+const allButton = document.querySelector(".controls-list");
 
 const text = document.querySelector(".message");
 const xpText = document.querySelector("#xpText");
@@ -188,10 +189,17 @@ function update(location) {
 }
 
 function animationText() {
-    text.classList.remove("animate-message");
-    void text.offsetWidth;
-    text.classList.add("animate-message");
+    if (windowWidth > 768) {
+        text.classList.remove("animate-message");
+        void text.offsetWidth;
+        text.classList.add("animate-message");
+    }
+    if (windowWidth < 768) {
+        text.classList.remove("animate-message");
+    }
 }
+
+animationText();
 
 function goTown() {
     update(locations[0]);
@@ -260,6 +268,10 @@ function goForest() {
     button5.style.display = "block";
     button6.style.display = "block";
     button6.style.marginLeft = "200px";
+    if (windowWidth < 768) {
+        button6.style.marginLeft = "2px";
+        allButton.style.bottom = "-85px";
+    }
     close();
 }
 
