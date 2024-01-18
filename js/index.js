@@ -1,6 +1,6 @@
 let xp = 0;
 let health = 100;
-let gold = 5000;
+let gold = 50;
 let currentWeapon = 0;
 let fighting;
 let monsterHealth;
@@ -496,7 +496,8 @@ function restart() {
     gold = 50;
     goldText.innerText = gold;
     currentWeapon = 0;
-    inventory = ["fist"];
+    inventory = [];
+    knight.style.filter = "none";
     winGameWindow.style.opacity = "0";
     winGameWindow.style.pointerEvents = "none";
     goTown();
