@@ -6,6 +6,7 @@ let fighting;
 let monsterHealth;
 let inventory = [];
 
+const windowWidth = window.innerWidth;
 const backGround = document.querySelector(".container");
 const knight = document.querySelector(".knight");
 
@@ -195,10 +196,18 @@ function animationText() {
 function goTown() {
     update(locations[0]);
     backGround.style.backgroundImage = 'url("css/img/backgraunds/city.webp")';
-    knight.style.top = "75%";
-    knight.style.left = "40%";
-    knight.style.width = "100px";
-    knight.style.animation = "bounce 5s ease-in-out infinite";
+    if (windowWidth < 768) {
+        knight.style.top = "75%";
+        knight.style.left = "20%";
+        knight.style.width = "10%";
+        knight.style.animation = "bounce 5s ease-in-out infinite";
+    } else {
+        knight.style.top = "75%";
+        knight.style.left = "40%";
+        knight.style.width = "100px";
+        knight.style.animation = "bounce 5s ease-in-out infinite";
+    }
+
     targetMonster.style.display = "none";
     targetMonster.classList = "";
     button3.style.display = "block";
@@ -213,8 +222,14 @@ function goTown() {
 function goShop() {
     update(locations[1]);
     backGround.style.backgroundImage = 'url("css/img/backgraunds/shop.webp")';
-    knight.style.width = "130px";
-    knight.style.top = "70%";
+    if (windowWidth < 768) {
+        knight.style.top = "75%";
+        knight.style.left = "10%";
+        knight.style.width = "20%";
+    } else {
+        knight.style.width = "130px";
+        knight.style.top = "70%";
+    }
     button3.style.display = "block";
     button4.style.display = "block";
     if (inventory.length === 3) {
@@ -231,6 +246,12 @@ function goForest() {
     knight.style.animation = "bounceKnight 3s ease-in-out infinite";
     knight.style.top = "65%";
     knight.style.left = "30%";
+
+    if (windowWidth < 768) {
+        knight.style.top = "70%";
+        knight.style.left = "10%";
+        knight.style.width = "10%";
+    }
 
     animationText();
     monsters.style.display = "block";
