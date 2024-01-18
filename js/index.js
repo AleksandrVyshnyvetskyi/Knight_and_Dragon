@@ -217,6 +217,9 @@ function goShop() {
     knight.style.top = "70%";
     button3.style.display = "block";
     button4.style.display = "block";
+    if (inventory.length === 3) {
+        button3.style.display = "none";
+    }
     animationText();
     close();
 }
@@ -344,6 +347,9 @@ function buyWeapon() {
         }
     } else {
         text.innerText = "You already have the most powerful weapon!";
+    }
+    if (inventory.length === 3) {
+        button3.style.display = "none";
     }
 }
 
