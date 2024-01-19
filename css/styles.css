@@ -524,7 +524,7 @@ a {
 }
 
 .message{
-    white-space: wrap;
+    white-space: normal;
 }
 
 .win-game {
