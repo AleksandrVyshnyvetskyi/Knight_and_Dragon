@@ -1,12 +1,17 @@
-let xp = 0;
+let xp = 300;
 let health = 100;
-let gold = 50;
+let gold = 500;
 let currentWeapon = 0;
 let fighting;
 let monsterHealth;
 let inventory = [];
+let lang = "en";
 
 const windowWidth = window.innerWidth;
+const langWindow = document.querySelector(".lang-wrap");
+const enBtn = document.querySelector("#english");
+const uaBtn = document.querySelector("#ukrainian");
+
 const backGround = document.querySelector(".container");
 const knight = document.querySelector(".knight");
 
@@ -44,46 +49,43 @@ const monsterLvl = document.querySelector("#monsterLvl");
 
 const weapons = [
     {
-        name: "fist",
+        en: { name: "fist" },
+        ua: { name: "кулак" },
         power: 10,
     },
-    {
-        name: "stick",
-        power: 20,
-    },
-    {
-        name: "dager",
-        power: 50,
-    },
-    {
-        name: "sword",
-        power: 75,
-    },
+    { en: { name: "stick" }, ua: { name: "дубина" }, power: 20 },
+    { en: { name: "dager" }, ua: { name: "кинджал" }, power: 50 },
+    { en: { name: "sword" }, ua: { name: "меч" }, power: 75 },
 ];
 
 const monster = [
     {
-        name: "Wolf",
+        en: { name: "Wolf" },
+        ua: { name: "Вовк" },
         level: 2,
         health: 30,
     },
     {
-        name: "Goblin",
+        en: { name: "Goblin" },
+        ua: { name: "Гоблін" },
         level: 5,
         health: 75,
     },
     {
-        name: "Skeleton",
+        en: { name: "Skeleton" },
+        ua: { name: "Скелет" },
         level: 7,
         health: 300,
     },
     {
-        name: "Cerber",
+        en: { name: "Cerber" },
+        ua: { name: "Цербер" },
         level: 15,
         health: 600,
     },
     {
-        name: "Dragon",
+        en: { name: "Dragon" },
+        ua: { name: "Дракон" },
         level: 20,
         health: 1200,
     },
@@ -91,79 +93,144 @@ const monster = [
 
 const locations = [
     {
-        name: "town square",
-        "button text": ["Inventory", "Go to shop", "Go to forest"],
-        "button functions": [openInventory, goShop, goForest],
-        text: 'You are in the town square. You see a sign that says "Shop".',
+        en: {
+            name: "town square",
+            "button text": ["Inventory", "Go to shop", "Go to forest"],
+            "button functions": [openInventory, goShop, goForest],
+            text: 'You are in the town square. You see a sign that says "Shop".',
+        },
+        ua: {
+            name: "Місто",
+            "button text": ["Інвентар", "В магазин", "В ліс"],
+            "button functions": [openInventory, goShop, goForest],
+            text: "Ви на міській площі. Ви бачите вивіску з написом «Магазин».",
+        },
     },
     {
-        name: "shop",
-        "button text": [
-            "Inventory",
-            "Buy 15 health (10 gold)",
-            "Buy weapon (100 gold)",
-            "Go to town square",
-        ],
-        "button functions": [openInventory, buyHealth, buyWeapon, goTown],
-        text: "You enter the shop.",
+        en: {
+            name: "shop",
+            "button text": [
+                "Inventory",
+                "Buy 15 health (10 gold)",
+                "Buy weapon (100 gold)",
+                "Go to town square",
+            ],
+            "button functions": [openInventory, buyHealth, buyWeapon, goTown],
+            text: "You enter the shop.",
+        },
+        ua: {
+            name: "Магазин",
+            "button text": [
+                "Інвентар",
+                "15 здоровья (10 золотих)",
+                "Зброя (100 золотих)",
+                "В місто",
+            ],
+            "button functions": [openInventory, buyHealth, buyWeapon, goTown],
+            text: "Ви зайшли в магазин.",
+        },
     },
     {
-        name: "forest",
-        "button text": [
-            "Fight wolf",
-            "Fight goblin",
-            "Fight skeleton",
-            "Fight cerber",
-            "Fight dragon",
-            "Go to town square",
-        ],
-        "button functions": [
-            fightWolf,
-            fightGoblin,
-            fightSkeleton,
-            fightCerber,
-            fightDragon,
-            goTown,
-        ],
-        text: "You enter the forest. You see some monsters.",
+        en: {
+            name: "forest",
+            "button text": [
+                "Fight wolf",
+                "Fight goblin",
+                "Fight skeleton",
+                "Fight cerber",
+                "Fight dragon",
+                "Go to town square",
+            ],
+            "button functions": [
+                fightWolf,
+                fightGoblin,
+                fightSkeleton,
+                fightCerber,
+                fightDragon,
+                goTown,
+            ],
+            text: "You enter the forest. You see some monsters.",
+        },
+        ua: {
+            name: "Ліс",
+            "button text": [
+                "Вовк",
+                "Гоблін",
+                "Скелет",
+                "Цербер",
+                "Дракон",
+                "В місто",
+            ],
+            "button functions": [
+                fightWolf,
+                fightGoblin,
+                fightSkeleton,
+                fightCerber,
+                fightDragon,
+                goTown,
+            ],
+            text: "Ви заходите в ліс. Ви бачите деяких монстрів.",
+        },
     },
     {
-        name: "fight",
-        "button text": ["Attack", "Dodge", "Run"],
-        "button functions": [attack, dodge, goTown],
-        text: "You are fighting a monster.",
+        en: {
+            name: "fight",
+            "button text": ["Attack", "Dodge", "Run"],
+            "button functions": [attack, dodge, goTown],
+            text: "You are fighting a monster.",
+        },
+        ua: {
+            name: "бій",
+            "button text": ["Атакувати", "Ухилятись", "Втікти"],
+            "button functions": [attack, dodge, goTown],
+            text: "Ви в бою з монстром.",
+        },
     },
     {
-        name: "kill monster",
-        "button text": [
-            "Go to town square",
-            "Go to town square",
-            "Go to town square",
-        ],
-        "button functions": [goTown, goTown, goTown],
-        text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.',
+        en: {
+            name: "kill monster",
+            "button text": [
+                "Go to town square",
+                "Go to town square",
+                "Go to town square",
+            ],
+            "button functions": [goTown, goTown, goTown],
+            text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.',
+        },
+        ua: {
+            name: "вбитий монстер",
+            "button text": ["В місто", "В місто", "В місто"],
+            "button functions": [goTown, goTown, goTown],
+            text: "Мостра повержено ! Ви знаходите золото та набираєтесь досвіду !",
+        },
     },
     {
-        name: "lose",
-        "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
-        "button functions": [restart, restart, restart],
-        text: "You die. ☠️",
+        en: {
+            name: "lose",
+            "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
+            "button functions": [restart, restart, restart],
+            text: "You die. ☠️",
+        },
+        ua: {
+            name: "lose",
+            "button text": ["ЗАНОВО?", "ЗАНОВО?", "ЗАНОВО?"],
+            "button functions": [restart, restart, restart],
+            text: "Ви мертві☠️",
+        },
     },
     {
-        name: "kill monster",
-        "button text": [
-            "Go to town square",
-            "Go to town square",
-            "Go to town square",
-        ],
-        "button functions": [goTown, goTown, goTown],
-        text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.',
-    },
-    {
-        name: "win",
-        "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
-        "button functions": [restart, restart, restart],
-        text: "You defeat the dragon! YOU WIN THE GAME! 🎉",
+        en: {
+            name: "win",
+            "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
+            "button functions": [restart, restart, restart],
+            text: "You defeat the dragon! YOU WIN THE GAME! 🎉",
+        },
+        ua: {
+            name: "win",
+            "button text": ["ЗАНОВО?", "ЗАНОВО?", "ЗАНОВО?"],
+            "button functions": [restart, restart, restart],
+            text: "Дракон мертвий ! Ви перемогли 🎉",
+        },
     },
 ];
 
@@ -172,20 +239,61 @@ button2.onclick = goTown;
 closeInventory.onclick = close;
 winGameButton.onclick = restart;
 
+enBtn.onclick = function () {
+    language("en");
+};
+uaBtn.onclick = function () {
+    language("ua");
+};
+
+function language(item) {
+    lang = item;
+    if (item === "ua") {
+        const title = document.querySelector(".lang-title");
+        title.innerText = "Оберіть вашу мову :";
+        button1.innerText = "Інвентар";
+        button2.innerText = "В місто";
+        text.innerText = "Ви у лісі. Неподалік видніється місто.";
+    }
+    if (item === "en") {
+        const title = document.querySelector(".lang-title");
+        title.innerText = "Select your language :";
+    }
+    langWindow.style.opacity = "0";
+    langWindow.style.pointerEvents = "none";
+}
+
 function update(location) {
-    button1.innerText = location["button text"][0];
-    button2.innerText = location["button text"][1];
-    button3.innerText = location["button text"][2];
-    button4.innerText = location["button text"][3];
-    button5.innerText = location["button text"][4];
-    button6.innerText = location["button text"][5];
-    button1.onclick = location["button functions"][0];
-    button2.onclick = location["button functions"][1];
-    button3.onclick = location["button functions"][2];
-    button4.onclick = location["button functions"][3];
-    button5.onclick = location["button functions"][4];
-    button6.onclick = location["button functions"][5];
-    text.innerText = location.text;
+    if (lang === "en") {
+        button1.innerText = location.en["button text"][0];
+        button2.innerText = location.en["button text"][1];
+        button3.innerText = location.en["button text"][2];
+        button4.innerText = location.en["button text"][3];
+        button5.innerText = location.en["button text"][4];
+        button6.innerText = location.en["button text"][5];
+        button1.onclick = location.en["button functions"][0];
+        button2.onclick = location.en["button functions"][1];
+        button3.onclick = location.en["button functions"][2];
+        button4.onclick = location.en["button functions"][3];
+        button5.onclick = location.en["button functions"][4];
+        button6.onclick = location.en["button functions"][5];
+        text.innerText = location.en.text;
+    }
+    if (lang === "ua") {
+        button1.innerText = location.ua["button text"][0];
+        button2.innerText = location.ua["button text"][1];
+        button3.innerText = location.ua["button text"][2];
+        button4.innerText = location.ua["button text"][3];
+        button5.innerText = location.ua["button text"][4];
+        button6.innerText = location.ua["button text"][5];
+        button1.onclick = location.ua["button functions"][0];
+        button2.onclick = location.ua["button functions"][1];
+        button3.onclick = location.ua["button functions"][2];
+        button4.onclick = location.ua["button functions"][3];
+        button5.onclick = location.ua["button functions"][4];
+        button6.onclick = location.ua["button functions"][5];
+        text.innerText = location.ua.text;
+    }
 }
 
 function animationText() {
@@ -250,7 +358,7 @@ function goShop() {
 function goForest() {
     update(locations[2]);
     backGround.style.backgroundImage =
-        'url("css/img/backgraunds/forest_bg.jpg")';
+        'url("css/img/backgraunds/forest_bg.webp")';
     knight.style.animation = "bounceKnight 3s ease-in-out infinite";
     knight.style.top = "65%";
     knight.style.left = "30%";
@@ -278,17 +386,17 @@ function goForest() {
 function openInventory() {
     inventoryBox.style.display = "block";
     inventoryBox.classList.remove("hiden");
-    if (inventory.includes("stick")) {
+    if (inventory.includes("stick") || inventory.includes("дубина")) {
         stick.style.display = "block";
     }
-    if (inventory.includes("dager")) {
+    if (inventory.includes("dager") || inventory.includes("кинджал")) {
         dager.style.display = "block";
     }
-    if (inventory.includes("sword")) {
+    if (inventory.includes("sword") || inventory.includes("меч")) {
         sword.style.display = "block";
     }
     if (inventory.length === 0) {
-        knight.src = "./css/img/knights/knight.png";
+        knight.src = "./css/img/knights/knight.webp";
     }
 }
 
@@ -301,22 +409,21 @@ dager.onclick = equipDager;
 sword.onclick = equipSword;
 
 function equipStick() {
-    knight.src = "./css/img/knights/knight_stick.png";
+    knight.src = "./css/img/knights/knight_stick.webp";
     fighting = 20;
     dmgText.innerText = "20";
-    console.log("stick");
     close();
 }
 
 function equipDager() {
-    knight.src = "./css/img/knights/knight_dager.png";
+    knight.src = "./css/img/knights/knight_dager.webp";
     fighting = 50;
     dmgText.innerText = 50;
     close();
 }
 
 function equipSword() {
-    knight.src = "./css/img/knights/knight_sword.png";
+    knight.src = "./css/img/knights/knight_sword.webp";
     fighting = 75;
     dmgText.innerText = 75;
     close();
@@ -327,16 +434,15 @@ function dmgMetr() {
         fighting = 10;
         dmgText.innerText = "10";
     }
-    if (inventory.includes("stick")) {
+    if (inventory.includes("stick") || inventory.includes("дубина")) {
         fighting = 20;
-        console.log("stick");
         dmgText.innerText = "20";
     }
-    if (inventory.includes("dager")) {
+    if (inventory.includes("dager") || inventory.includes("кинджал")) {
         fighting = 50;
         dmgText.innerText = 50;
     }
-    if (inventory.includes("sword")) {
+    if (inventory.includes("sword") || inventory.includes("меч")) {
         fighting = 75;
         dmgText.innerText = 75;
     }
@@ -350,7 +456,12 @@ function buyHealth() {
         hpText.innerText = health;
     } else {
         animationText();
-        text.innerText = "You do not have enough gold to buy health.";
+        if (lang === "en") {
+            text.innerText = "You do not have enough gold to buy health.";
+        }
+        if (lang === "ua") {
+            text.innerText = "У вас недостатньо золота, щоб купити здоров'я.";
+        }
     }
 }
 
@@ -361,25 +472,50 @@ function buyWeapon() {
             gold -= 100;
             currentWeapon++;
             goldText.innerText = gold;
-            let newWeapon = weapons[currentWeapon].name;
-            text.innerText = "You now have a " + newWeapon + ".";
+            let newWeapon;
+
+            if (lang === "en") {
+                newWeapon = weapons[currentWeapon].en.name;
+                text.innerText = "You now have a " + newWeapon + ".";
+            } else if (lang === "ua") {
+                newWeapon = weapons[currentWeapon].ua.name;
+                text.innerText =
+                    "Тепер у вас є нова зброя - " + newWeapon + ".";
+            }
             inventory.push(newWeapon);
-            text.innerText += " In your inventory you have: " + inventory;
-            if (inventory.includes("stick")) {
-                knight.src = "./css/img/knights/knight_stick.png";
+            if (lang === "en") {
+                text.innerText += " In your inventory you have: " + inventory;
+            } else if (lang === "ua") {
+                newWeapon = weapons[currentWeapon].ua.name;
+                text.innerText = text.innerText +=
+                    " У вашому інвентарі є: " + inventory;
             }
-            if (inventory.includes("dager")) {
-                knight.src = "./css/img/knights/knight_dager.png";
+
+            if (inventory.includes("stick") || inventory.includes("дубина")) {
+                knight.src = "./css/img/knights/knight_stick.webp";
             }
-            if (inventory.includes("sword")) {
-                knight.src = "./css/img/knights/knight_sword.png";
+            if (inventory.includes("dager") || inventory.includes("кинджал")) {
+                knight.src = "./css/img/knights/knight_dager.webp";
+            }
+            if (inventory.includes("sword") || inventory.includes("меч")) {
+                knight.src = "./css/img/knights/knight_sword.webp";
             }
             dmgMetr();
         } else {
-            text.innerText = "You do not have enough gold to buy a weapon.";
+            if (lang === "en") {
+                text.innerText = "You do not have enough gold to buy a weapon.";
+            }
+            if (lang === "ua") {
+                text.innerText = "У вас недостатньо золота, щоб купити зброю.";
+            }
         }
     } else {
-        text.innerText = "You already have the most powerful weapon!";
+        if (lang === "en") {
+            text.innerText = "You already have the most powerful weapon!";
+        }
+        if (lang === "ua") {
+            text.innerText = "У вас вже є найпотужніша зброя!";
+        }
     }
     if (inventory.length === 3) {
         button3.style.display = "none";
@@ -387,14 +523,19 @@ function buyWeapon() {
 }
 
 function fightWolf() {
-    targetMonster.src = "./css/img/monsters/wolf.png";
+    targetMonster.src = "./css/img/monsters/wolf.webp";
     targetMonster.classList = "";
     targetMonster.classList.add("wolf");
     targetMonster.style.animation = "";
     targetMonster.style.filter = "";
 
     monsterStats.style.display = "flex";
-    monsterName.innerText = monster[0].name;
+    if (lang === "ua") {
+        monsterName.innerText = monster[0].ua.name;
+    }
+    if (lang === "en") {
+        monsterName.innerText = monster[0].en.name;
+    }
     monsterHealthText.innerText = monster[0].health;
     monsterLvl.innerText = monster[0].level;
 
@@ -403,14 +544,20 @@ function fightWolf() {
 }
 
 function fightGoblin() {
-    targetMonster.src = "./css/img/monsters/goblin.png";
+    targetMonster.src = "./css/img/monsters/goblin.webp";
     targetMonster.classList = "";
     targetMonster.classList.add("goblin");
     targetMonster.style.animation = "";
     targetMonster.style.filter = "";
 
     monsterStats.style.display = "flex";
-    monsterName.innerText = monster[1].name;
+    monsterStats.style.display = "flex";
+    if (lang === "ua") {
+        monsterName.innerText = monster[1].ua.name;
+    }
+    if (lang === "en") {
+        monsterName.innerText = monster[1].en.name;
+    }
     monsterHealthText.innerText = monster[1].health;
     monsterLvl.innerText = monster[1].level;
 
@@ -419,14 +566,20 @@ function fightGoblin() {
 }
 
 function fightSkeleton() {
-    targetMonster.src = "./css/img/monsters/skeleton.png";
+    targetMonster.src = "./css/img/monsters/skeleton.webp";
     targetMonster.classList = "";
     targetMonster.classList.add("skeleton");
     targetMonster.style.animation = "";
     targetMonster.style.filter = "";
 
     monsterStats.style.display = "flex";
-    monsterName.innerText = monster[2].name;
+    monsterStats.style.display = "flex";
+    if (lang === "ua") {
+        monsterName.innerText = monster[2].ua.name;
+    }
+    if (lang === "en") {
+        monsterName.innerText = monster[2].en.name;
+    }
     monsterHealthText.innerText = monster[2].health;
     monsterLvl.innerText = monster[2].level;
 
@@ -435,14 +588,20 @@ function fightSkeleton() {
 }
 
 function fightCerber() {
-    targetMonster.src = "./css/img/monsters/cerber.png";
+    targetMonster.src = "./css/img/monsters/cerber.webp";
     targetMonster.classList = "";
     targetMonster.classList.add("cerber");
     targetMonster.style.animation = "";
     targetMonster.style.filter = "";
 
     monsterStats.style.display = "flex";
-    monsterName.innerText = monster[3].name;
+    monsterStats.style.display = "flex";
+    if (lang === "ua") {
+        monsterName.innerText = monster[3].ua.name;
+    }
+    if (lang === "en") {
+        monsterName.innerText = monster[3].en.name;
+    }
     monsterHealthText.innerText = monster[3].health;
     monsterLvl.innerText = monster[3].level;
 
@@ -451,14 +610,20 @@ function fightCerber() {
 }
 
 function fightDragon() {
-    targetMonster.src = "./css/img/monsters/dragon.png";
+    targetMonster.src = "./css/img/monsters/dragon.webp";
     targetMonster.classList = "";
     targetMonster.classList.add("dragon");
     targetMonster.style.animation = "";
     targetMonster.style.filter = "";
 
     monsterStats.style.display = "flex";
-    monsterName.innerText = monster[4].name;
+    monsterStats.style.display = "flex";
+    if (lang === "ua") {
+        monsterName.innerText = monster[4].ua.name;
+    }
+    if (lang === "en") {
+        monsterName.innerText = monster[4].en.name;
+    }
     monsterHealthText.innerText = monster[4].health;
     monsterLvl.innerText = monster[4].level;
 
@@ -466,31 +631,41 @@ function fightDragon() {
     goFight();
 }
 
-function dodge() {
-    1 + 2;
-}
-
 function goFight() {
     update(locations[3]);
     monsterHealth = monster[fighting].health;
-    // monsterStats.style.display = "block";
     targetMonster.style.display = "block";
     button4.style.display = "none";
     button5.style.display = "none";
     button6.style.display = "none";
 }
 
+// targetMonster.onclick = attack;
+
 function attack() {
     animationText();
-    text.innerText = "The " + monster[fighting].name + " attacks.";
-    text.innerText +=
-        " You attack it with your " + weapons[currentWeapon].name + ".";
+    if (lang === "en") {
+        text.innerText = "The " + monster[fighting].en.name + " attacks.";
+        text.innerText +=
+            " You attack it with your " + weapons[currentWeapon].en.name + ".";
+    }
+    if (lang === "ua") {
+        text.innerText = monster[fighting].ua.name + " атакує !";
+        text.innerText +=
+            " Ви атакуєте його своїм " + weapons[currentWeapon].ua.name + "ом.";
+    }
     health -= getMonsterAttackValue(monster[fighting].level);
+    monsterDmg.innerText = getMonsterAttackValue(monster[fighting].level);
     if (isMonsterHit()) {
         monsterHealth -=
             weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
     } else {
-        text.innerText += " You miss.";
+        if (lang === "en") {
+            text.innerText = " You miss.";
+        }
+        if (lang === "ua") {
+            text.innerText = "Ви промахнулися.";
+        }
     }
     hpText.innerText = health;
     monsterHealthText.innerText = monsterHealth;
@@ -499,10 +674,6 @@ function attack() {
     } else if (monsterHealth <= 0) {
         fighting === 4 ? winGame() : defeatMonster();
     }
-    // if (Math.random() <= 0.1 && inventory.length !== 1) {
-    //     text.innerText += " Your " + inventory.pop() + " breaks.";
-    //     currentWeapon--;
-    // }
 }
 
 function getMonsterAttackValue(level) {
@@ -516,7 +687,14 @@ function isMonsterHit() {
 
 function dodge() {
     animationText();
-    text.innerText = "You dodge the attack from the " + monster[fighting].name;
+    if (lang === "en") {
+        text.innerText =
+            "You dodge the attack from the " + monster[fighting].en.name;
+    }
+    if (lang === "ua") {
+        text.innerText =
+            "Ви ухиляєтеся від атаки " + monster[fighting].ua.name + "a";
+    }
 }
 
 function lose() {
@@ -554,12 +732,12 @@ function defeatMonster() {
 }
 
 function winGame() {
-    update(locations[7]);
+    update(locations[6]);
     button4.style.display = "none";
     button5.style.display = "none";
     button6.style.display = "none";
     winGameWindow.style.opacity = "1";
     setTimeout(function () {
-        winGameWindow.style.pointerEvents = "auto";
+        winGameWindow.style.pointerEvents = "inherit";
     }, 1);
 }

@@ -3,10 +3,14 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="The game Knight and Dragon is based on a fictional universe where you have to fight a lot of monsters, earn gold and experience, buy new weapons to fight the formidable DRAGON in the end!"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Rubik+Doodle+Shadow&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" href="css/styles.css" />
@@ -16,14 +20,25 @@
         <div class="wrap">
             <h1 class="title">Knight&Dragon</h1>
             <div class="container">
+                <div class="lang-wrap">
+                    <h1 class="lang-title">Select your language :</h1>
+                    <div>
+                        <button id="english">
+                            <img src="./css/img/lang/en.webp" alt="english" />
+                        </button>
+                        <button id="ukrainian">
+                            <img src="./css/img/lang/ua.webp" alt="ukrainian" />
+                        </button>
+                    </div>
+                </div>
                 <div class="win-game">
-                    <h1 class="win-game-title">YOU WIN GAME !!!</h1>
+                    <h1 class="win-game-title">YOU WIN GAME 🎉!!!</h1>
                     <button class="win-game-button">Restart ?</button>
                 </div>
                 <div>
                     <img
                         class="knight"
-                        src="./css/img/knights/knight.png"
+                        src="./css/img/knights/knight.webp"
                         alt="player"
                     />
                 </div>
@@ -40,7 +55,7 @@
                             <p>LvL <span id="monsterLvl">10</span></p>
                         </li>
                         <li>
-                            <p>DMG <span id="monsterDmg">80</span></p>
+                            <p>DMG <span id="monsterDmg">?</span></p>
                         </li>
                     </ul>
                 </div>
@@ -49,27 +64,27 @@
                         <li class="inv-box">
                             <img
                                 class="close"
-                                src="./css/img/weapons/X.png"
+                                src="./css/img/weapons/X.webp"
                                 alt="Empty"
                             />
                         </li>
                         <li class="inv-box">
                             <img
-                                src="./css/img/weapons/stick.png"
+                                src="./css/img/weapons/stick.webp"
                                 alt="stick"
                                 class="stick"
                             />
                         </li>
                         <li class="inv-box">
                             <img
-                                src="./css/img/weapons/dager.png"
+                                src="./css/img/weapons/dager.webp"
                                 alt="dager"
                                 class="dager"
                             />
                         </li>
                         <li class="inv-box">
                             <img
-                                src="/css/img/weapons/sword.png"
+                                src="/css/img/weapons/sword.webp"
                                 alt="sword"
                                 class="sword"
                             />
