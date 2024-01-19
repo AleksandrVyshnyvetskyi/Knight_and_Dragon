@@ -640,7 +640,7 @@ function goFight() {
     button6.style.display = "none";
 }
 
-// targetMonster.onclick = attack;
+targetMonster.onclick = attack;
 
 function attack() {
     animationText();
